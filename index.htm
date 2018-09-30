@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<!-- saved from url=(0053)https://s.codepen.io/jadon7/debug/mzbeVa/xnrabNpOgEdA -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+  
+  <link rel="shortcut icon" type="image/x-icon" href="https://cdn.dribbble.com/users/1326405/avatars/normal/d7e44cb41ad7898cf9b3a2d70aa3de01.jpg?1517229690">
+  <link rel="mask-icon" type="" href="https://static.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111">
+  <title>Search by  jadon7</title>
+  
+  
+  
+  <link rel="stylesheet" href="./CodePen - A Pen by jadon7_files/bootstrap_3.3.1_css_bootstrap.min.css">
+
+      <style>
+      body{
+  background:#333;
+}
+a:link{
+  color:#fff;
+  text-decoration:blink;
+}
+#tips{
+  color:#fff;
+}
+#frame{
+  width:500px;
+  height:300px;
+  position:absolute;
+  margin:auto;
+  top:0;
+  right:0;
+  bottom:0px;
+  left:0;
+}
+.searchOnclick{
+  position: relative;
+  left: 50%;
+  margin: 300px 0 30px -195px;
+  transition: all 300ms; 
+  transition-delay: 100ms;
+}
+.search{
+  position: relative;
+  left: 50%;
+  margin: 300px 0 30px -22px;
+  transition: all 300ms; 
+  transition-delay: 100ms;
+}
+
+
+.oval{
+  width:44px;
+  height:44px;
+  border: 2px solid #fff;
+  border-radius:22px;
+  transition: all 300ms; 
+  transition-delay: 100ms;
+}
+.ovalOnclick{
+  width:400px;
+  height:44px;
+  border: 2px solid #fff;
+  border-radius:22px;
+  transition: all 300ms; 
+  transition-delay: 100ms;
+}
+.line{
+  width:15px;
+  height:2px;
+  background-color:#fff;
+  transform: rotate(-315deg);
+  margin-left:35px;
+  margin-top:-3px;
+  transition: all 100ms; 
+  transition-delay: 300ms;
+}
+.lineOnclick{
+  width:0px;
+  height:2px;
+  background-color:#fff;
+  transform: rotate(-315deg);
+  margin-left:35px;
+  margin-top:-3px;
+  transition: all 100ms; 
+}
+.x2{
+  width:0px;
+  height:2px;
+  background-color:#fff;
+  transform: rotate(45deg);
+  margin-left:360px;
+  margin-top:-2px;
+  transition: all 100ms; 
+}
+.x2Onclick{
+  width:24px;
+  height:2px;
+  background-color:#fff;
+  transform: rotate(45deg);
+  margin-left:360px;
+  margin-top:-2px;
+  transition: all 100ms; 
+  transition-delay: 350ms;
+}
+
+
+.x1{
+  width:0px;
+  height:2px;
+  background-color:#fff;
+  transform: rotate(135deg);
+  margin-left:360px;
+  margin-top:-22px;
+  transition: all 100ms; 
+}
+.x1Onclick{
+  width:24px;
+  height:2px;
+  background-color:#fff;
+  transform: rotate(135deg);
+  margin-left:360px;
+  margin-top:-22px;
+  transition: all 100ms; 
+  transition-delay: 400ms;
+}
+    </style>
+
+  
+  
+  
+  
+
+</head>
+
+<body translate="no">
+
+  <!-- <div id="frame" class="text-center">
+  <h3><a href="#" id="wiki">Click here for a random article</a></h3> -->
+  <div id="search" class="search">
+    <div id="oval" class="oval"></div>
+    <div id="line" class="line"></div>
+    <div id="esc">
+      <div id="x1" class="x1"></div>
+      <div id="x2" class="x2"></div>
+    </div>
+  </div>
+<!--   <h3 id="tips" style="margin:50px">Click icon to search</h3>
+</div> -->
+<script type="text/javascript" src="./CodePen - A Pen by jadon7_files/now.json"></script>
+  
+  
+  
+
+    <script>
+      var a=0; 
+var search = document.getElementById("search");
+var oval = document.getElementById("oval");
+var line = document.getElementById("line");
+var x1 = document.getElementById("x1");
+var x2 = document.getElementById("x2");
+
+search.onclick=function()
+{
+  if(a%2==0)
+  {
+    oval.className="ovalOnclick";
+    search.className="searchOnclick";
+    line.className="lineOnclick";
+    x1.className="x1Onclick";
+    x2.className="x2Onclick";
+    a++;
+  }else{
+    oval.className="oval";
+    search.className="search";
+    line.className="line";
+    x1.className="x1";
+    x2.className="x2";
+    a++;
+  }
+};
+    </script>
+
+
+
+  
+  
+
+
+
+
+ <div id="eagle-drag-images" style="position: fixed; top: -100000px;"></div></body></html>
