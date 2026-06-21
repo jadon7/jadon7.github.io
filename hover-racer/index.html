@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no" />
+  <meta name="theme-color" content="#040611" />
+  <meta name="description" content="Neon Apex：高空霓虹悬浮竞速游戏。" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath fill='%2352f4ff' d='M8 44 23 10h18L56 44 42 37l-4-10H26l-4 10z'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="./styles.css" />
+  <title>Neon Apex — Hover Racing</title>
+</head>
+<body>
+  <main id="app" aria-label="Neon Apex 悬浮赛车游戏">
+    <div id="scene" aria-hidden="true"></div>
+    <div class="vignette" aria-hidden="true"></div>
+    <div class="scanlines" aria-hidden="true"></div>
+
+    <section id="hud" class="hud hidden" aria-label="比赛抬头显示器">
+      <header class="hud-top">
+        <div class="panel position-panel">
+          <span class="kicker">RACE POSITION</span>
+          <strong id="position">1</strong><span class="fraction">/6</span>
+          <small id="gap">LEAD PACK</small>
+        </div>
+        <div class="lap-panel">
+          <span class="kicker">LAP</span>
+          <strong><span id="lap">1</span><small>/3</small></strong>
+          <div id="sectors" class="sectors"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+        <div class="panel time-panel">
+          <span class="kicker">RACE TIME</span>
+          <strong id="time">00:00.000</strong>
+          <small id="best">BEST --:--.---</small>
+        </div>
+      </header>
+
+      <div id="warning" class="warning" role="status" aria-live="polite"></div>
+      <canvas id="minimap" width="240" height="150" aria-label="赛道小地图"></canvas>
+
+      <div id="speedGauge" class="speed-gauge">
+        <svg viewBox="0 0 160 160" aria-hidden="true">
+          <circle class="gauge-track" cx="80" cy="80" r="65"></circle>
+          <circle id="speedArc" class="gauge-fill" cx="80" cy="80" r="65"></circle>
+        </svg>
+        <div><strong id="speed">000</strong><span>KM/H</span></div>
+      </div>
+
+      <div class="meters">
+        <div id="shieldMeter" class="meter"><div><span>SHIELD</span><strong id="shieldText">100%</strong></div><b><i id="shieldFill"></i></b></div>
+        <div class="meter boost-meter"><div><span>ION BOOST</span><strong id="boostText">65%</strong></div><b><i id="boostFill"></i></b></div>
+      </div>
+
+      <div id="toast" class="toast" role="status" aria-live="polite"></div>
+      <div class="hud-buttons">
+        <button id="quality" type="button" aria-label="切换画质">HQ</button>
+        <button id="mute" type="button" aria-label="静音">♫</button>
+        <button id="pause" type="button" aria-label="暂停">Ⅱ</button>
+      </div>
+    </section>
+
+    <section id="menu" class="screen menu-screen">
+      <div class="menu-copy">
+        <p class="eyebrow">VELOCITY LEAGUE // NIGHT CIRCUIT 07</p>
+        <h1><span>NEON</span> APEX</h1>
+        <p class="lead">驾驭磁悬浮原型机，在高空赛道完成三圈竞速。抢占加速带、避开能量障碍，并用离子推进超越五名 AI 车手。</p>
+        <div class="chips"><span>3 LAPS</span><span>6 RACERS</span><span>TOUCH READY</span><span>PROCEDURAL AUDIO</span></div>
+        <button id="start" class="primary" type="button"><span>启动引擎</span><i>→</i></button>
+        <p class="note">首次点击会解锁浏览器音频。建议佩戴耳机。</p>
+      </div>
+      <div class="controls-card">
+        <div><kbd>W / ↑</kbd><span>加速</span></div><div><kbd>S / ↓</kbd><span>制动</span></div>
+        <div><kbd>A D / ← →</kbd><span>转向</span></div><div><kbd>SPACE</kbd><span>离子加速</span></div>
+        <div><kbd>SHIFT</kbd><span>空气制动</span></div><div><kbd>ESC / P</kbd><span>暂停</span></div>
+      </div>
+    </section>
+
+    <div id="countdown" class="countdown hidden" aria-live="assertive">3</div>
+
+    <section id="pauseScreen" class="screen modal hidden">
+      <div class="modal-card"><p class="eyebrow">RACE CONTROL</p><h2>比赛暂停</h2><p>引擎已降至待机。继续时控制会立即恢复。</p><button id="resume" class="primary compact"><span>继续比赛</span><i>→</i></button><button id="pauseRestart" class="ghost">重新开始</button></div>
+    </section>
+
+    <section id="result" class="screen modal hidden">
+      <div class="modal-card result-card"><p id="resultKicker" class="eyebrow">RACE COMPLETE</p><h2 id="resultTitle">冠军</h2><p id="resultCopy">你完成了 Neon Apex 夜间赛道。</p><div class="result-stats"><div><span>FINISH</span><strong id="resultPosition">1 / 6</strong></div><div><span>TIME</span><strong id="resultTime">00:00.000</strong></div><div><span>TOP SPEED</span><strong id="resultSpeed">000 KM/H</strong></div></div><button id="restart" class="primary compact"><span>再次出发</span><i>↻</i></button></div>
+    </section>
+
+    <section id="webglError" class="screen modal hidden"><div class="modal-card"><p class="eyebrow">RENDERER OFFLINE</p><h2>无法启动 3D 渲染</h2><p>请启用浏览器硬件加速，或改用支持 WebGL 2 的现代浏览器。</p></div></section>
+
+    <div id="mobileControls" class="mobile-controls" aria-label="移动控制">
+      <div class="steer"><button data-action="left" aria-label="向左转">◀</button><button data-action="right" aria-label="向右转">▶</button></div>
+      <div class="drive"><button class="brake" data-action="brake">BRAKE</button><button class="throttle" data-action="throttle">THRUST</button><button class="boost" data-action="boost">BOOST</button></div>
+    </div>
+
+    <aside id="debug" class="debug hidden"></aside>
+    <div id="live" class="sr-only" aria-live="polite"></div>
+  </main>
+
+  <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.184.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.184.0/examples/jsm/"}}</script>
+  <script type="module" src="./game.js"></script>
+</body>
+</html>
