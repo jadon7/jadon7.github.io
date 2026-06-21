@@ -1,0 +1,8 @@
+{
+  "name":"neon-apex-hover-racer",
+  "version":"1.0.0",
+  "private":true,
+  "type":"module",
+  "scripts":{"serve":"python3 -m http.server 5188 --bind 127.0.0.1","test":"node --test tests/core.test.mjs"},
+  "devDependencies":{"three":"0.184.0"}
+}
